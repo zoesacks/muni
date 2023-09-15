@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from .models import *
 
-# Create your views here.
+def post_list(request):
+    viewCuadro = cuadroPrincipal.objects.all()
+    return render(request, 
+                'index.html',
+                context= {'viewCuadro': viewCuadro},)

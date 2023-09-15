@@ -1,0 +1,108 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Panel de control</a></h1>
+{% endblock %}
+
+{% block content %}
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+<table>
+    <thead>
+        <tr>
+            <th>Campo 1</th>
+            <th>Campo 2</th>
+            <th>Campo 3</th>
+        </tr>
+    </thead>
+    <tbody>
+       
+        <tr>
+            <td>{{ codigo.viewCuadro }}</td>
+            <td>{{ nroFactura.viewCuadro }}</td>
+            <td>{{ proveedor.viewCuadro }}</td>
+        </tr>
+
+    </tbody>
+</table>
+
+<h1>{{ viewCuadro }}</h1>
+
+{% endblock %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="card w-100">
+                <div class="card-header text-center bg-primary"><h5><span class="fas fa-file"></span>&nbsp; Pendientes</h5></div>
+                <div class="card-body text-center"><h1>{{ viewCuadro }}</h1></div>
+                <div class="card-footer">
+                    <a href="/" class="btn btn-info">Ver solicitudes pendientes</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="card w-100">
+                <div class="card-header text-center bg-primary"><h5><span class="fas fa-file"></span>&nbsp; Aprobadas</h5></div>
+                <div class="card-body text-center"><h1>{{ solicitudes_aprobadas }}</h1></div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-info">Ver solicitudes aprobadas</a>
+                </div>
+            </div>
+        </div>    
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="card w-100">
+                <div class="card-header text-center bg-primary"><h5><span class="fas fa-file"></span>&nbsp; Observadas</h5></div>
+                <div class="card-body text-center"><h1>{{ solicitudes_observadas }}</h1></div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-info">Ver solicitudes observadas</a>
+                </div>
+            </div>
+        </div>    
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="card w-100">
+                <div class="card-header text-center bg-primary"><h5><span class="fas fa-file"></span>&nbsp; Totales</h5></div>
+                <div class="card-body text-center"><h1>{{ solicitudes_totales }}</h1></div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-info">Ver todas las Solicitudes</a>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+
+<script>
+    function createChart() {
+      var ctx = document.getElementById('Grafico_solicitudes').getContext('2d');
+  
+      new Chart(ctx, {
+        type: 'line', 
+        data: {
+        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+          datasets: [
+            {
+              label: "Total Pagados",
+              backgroundColor: "rgba(40, 116, 255, 0.2)",
+              borderColor: "rgba(40, 116, 255, 1)",
+              borderWidth: 2,
+              data: [1500, 4580, 2900,1500, 4580, 2900,1500, 4580, 2900,1500, 4580, 2900,],
+            }
+          ]
+        },
+        options: {
+            responsive: true, // Hace que el gráfico sea responsive
+            maintainAspectRatio: false, // Evita que el gráfico mantenga un aspecto de relación fija
+        },
+      });
+    }
+  
+    // Cuando se carga la página, crea el gráfico
+    document.addEventListener('DOMContentLoaded', function() {
+      createChart();
+    });
+  </script>
+  
+ 
