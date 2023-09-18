@@ -10,6 +10,8 @@ class cuadroPrincipal(models.Model):
     unidadEjecutora = models.CharField(max_length=10, null=True, blank=True)
     objeto = models.TextField(null=True, blank=True)
 
-
+    def __str__(self):
+        return self.codigo
+    
     class Meta:
         verbose_name = 'devengados' 

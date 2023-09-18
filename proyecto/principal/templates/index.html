@@ -2,37 +2,41 @@
 
 {% block title %}Dashboard{% endblock %}
 
-{% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">Panel de control</a></h1>
-{% endblock %}
+
 
 {% block content %}
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
-<table>
-    <thead>
-        <tr>
-            <th>Campo 1</th>
-            <th>Campo 2</th>
-            <th>Campo 3</th>
-        </tr>
-    </thead>
-    <tbody>
-       
-        <tr>
-            <td>{{ codigo.viewCuadro }}</td>
-            <td>{{ nroFactura.viewCuadro }}</td>
-            <td>{{ proveedor.viewCuadro }}</td>
-        </tr>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Dato 1</th>
+                <th>Dato 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for elemento in datos %}
+                <tr>
+                    <td>{{ elemento.codigo }}</td>
+                    <td>{{ elemento.nroFactura }}</td>
+                    <td>{{ elemento.oc }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
 
-    </tbody>
-</table>
-
-<h1>{{ viewCuadro }}</h1>
 
 {% endblock %}
+
+
+
+
+
 <div class="container">
     <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6 col-12">
