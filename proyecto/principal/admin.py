@@ -5,7 +5,7 @@ from import_export import resources,fields, widgets
 
 @admin.register(cuadroPrincipal)
 class cuadroPrincipalAdmin(ImportExportModelAdmin):
-    list_display = ('codigo', 'nroFactura', 'proveedor', 'oc', 'factura', 'ff', 'unidadEjecutora', 'objeto')
+    list_display = ('emision', 'alta','codigo', 'nroFactura', 'proveedor', 'oc', 'factura', 'ff', 'unidadEjecutora',  'fondoAfectado')
 
 class cuadroPrincipalInline(admin.TabularInline):
     model = cuadroPrincipal

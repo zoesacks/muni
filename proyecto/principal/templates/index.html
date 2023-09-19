@@ -1,112 +1,67 @@
 {% extends "admin/base.html" %}
 
-{% block title %}Dashboard{% endblock %}
 
+<!DOCTYPE html>
+<html lang="en">
+    <head>
 
+    {% block extrahead %}
+        {{ block.super }}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'estilos.css' %}">
+    {% endblock %}
+    </head>
 
-{% block content %}
+    <body>
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
-<body>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Dato 1</th>
-                <th>Dato 2</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for elemento in datos %}
-                <tr>
-                    <td>{{ elemento.codigo }}</td>
-                    <td>{{ elemento.nroFactura }}</td>
-                    <td>{{ elemento.oc }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-
-
-{% endblock %}
-
-
-
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <div class="card w-100">
-                <div class="card-header text-center bg-primary"><h5><span class="fas fa-file"></span>&nbsp; Pendientes</h5></div>
-                <div class="card-body text-center"><h1>{{ viewCuadro }}</h1></div>
-                <div class="card-footer">
-                    <a href="/" class="btn btn-info">Ver solicitudes pendientes</a>
+        {% block content %}
+            <div class="container">
+                {% block content_title %}{% endblock %}
+                {% block breadcrumbs %}{% endblock %}
+                <div id="content-main">
+                    {% block content_below_title %}{% endblock %}
+                    {% block content_breadcrumb %}{% endblock %}
+                    {% block content_breadcrumb_trail %}{% endblock %}
+                    {% block content_main %}{% endblock %}
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <div class="card w-100">
-                <div class="card-header text-center bg-primary"><h5><span class="fas fa-file"></span>&nbsp; Aprobadas</h5></div>
-                <div class="card-body text-center"><h1>{{ solicitudes_aprobadas }}</h1></div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-info">Ver solicitudes aprobadas</a>
-                </div>
-            </div>
-        </div>    
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <div class="card w-100">
-                <div class="card-header text-center bg-primary"><h5><span class="fas fa-file"></span>&nbsp; Observadas</h5></div>
-                <div class="card-body text-center"><h1>{{ solicitudes_observadas }}</h1></div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-info">Ver solicitudes observadas</a>
-                </div>
-            </div>
-        </div>    
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <div class="card w-100">
-                <div class="card-header text-center bg-primary"><h5><span class="fas fa-file"></span>&nbsp; Totales</h5></div>
-                <div class="card-body text-center"><h1>{{ solicitudes_totales }}</h1></div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-info">Ver todas las Solicitudes</a>
-                </div>
-            </div>
-        </div>  
-    </div>
 
 
-<script>
-    function createChart() {
-      var ctx = document.getElementById('Grafico_solicitudes').getContext('2d');
-  
-      new Chart(ctx, {
-        type: 'line', 
-        data: {
-        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-          datasets: [
-            {
-              label: "Total Pagados",
-              backgroundColor: "rgba(40, 116, 255, 0.2)",
-              borderColor: "rgba(40, 116, 255, 1)",
-              borderWidth: 2,
-              data: [1500, 4580, 2900,1500, 4580, 2900,1500, 4580, 2900,1500, 4580, 2900,],
-            }
-          ]
-        },
-        options: {
-            responsive: true, // Hace que el gráfico sea responsive
-            maintainAspectRatio: false, // Evita que el gráfico mantenga un aspecto de relación fija
-        },
-      });
-    }
-  
-    // Cuando se carga la página, crea el gráfico
-    document.addEventListener('DOMContentLoaded', function() {
-      createChart();
-    });
-  </script>
-  
- 
+            <div class = "cuadroPrincipal">
+                <table>
+                    <thead>
+                        <tr>
+                            <th> </th>
+                            <th>codigo</th>
+                            <th>nro de Factura</th>
+                            <th>Proveedor</th>
+                            <th>OC</th>
+                            <th>ff</th>
+                            <th>Unidad Ejecutora</th>
+                            <th>Objeto</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for elemento in datos %}
+                        <tr>
+                            <td><input type="checkbox" name="checkbox1"></td>
+                            <td>{{ elemento.codigo }}</td>
+                            <td>{{ elemento.nroFactura }}</td>
+                            <td>{{ elemento.proveedor }}</td>
+                            <td>{{ elemento.oc }}</td>
+                            <td>{{ elemento.ff }}</td>
+                            <td>{{ elemento.unidadEjecutora }}</td>
+                            <td>{{ elemento.objeto }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endblock %}
+    </body>
+</html>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'estilos.css' %}">

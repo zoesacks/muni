@@ -1,0 +1,12 @@
+
+.cuadroPrincipal {
+    width: auto; 
+    height: 85vh;
+    border: 1px solid #ccc;
+    overflow: scroll;
+    white-space: nowrap; 
+}
+
+.conteiner{
+    background-color: aquamarine;
+}
