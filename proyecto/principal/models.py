@@ -1,6 +1,9 @@
 from django.db import models
 
+
 class cuadroPrincipal(models.Model):
+    selccionar = models.BooleanField(default=False)
+    enviado = models.BooleanField(default=False)
     emision = models.CharField(max_length=10, null=True, blank=True)
     alta = models.CharField(max_length=10, null=True, blank=True)
     codigo = models.CharField(max_length=30, null=True, blank=True)
