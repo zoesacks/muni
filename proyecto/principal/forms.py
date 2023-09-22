@@ -1,15 +1,21 @@
 from django import forms
-from .models import cuadroPrincipal
+from .models import devengados
+from .views import *
 
 
+class enviar(forms.Form):
+   volver = forms.BooleanField(required=False, widget=forms.HiddenInput(), initial=True)
 
-class CuadroPrincipalForm(forms.Form):
-    selccionar = forms.ModelMultipleChoiceField(
-        widget = forms.CheckboxSelectMultiple,
-        queryset=cuadroPrincipal.objects.all(),
-    )
-    emision = forms.CharField(max_length=10, required=False, label='Emisión')
-
+class devengadosForm(forms.ModelForm):
     class Meta:
-        model = cuadroPrincipal
-        fields = '__all__' 
+        model = devengados
+        fields = ['nroFactura'] 
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(devengadosForm, self).__init__(*args, **kwargs)
+
+        self.fields['seleccionar'] = forms.ModelMultipleChoiceField(
+            widget=forms.CheckboxSelectMultiple,
+            queryset=devengados.objects.filter(codigo=user, enviado = False),
+        )

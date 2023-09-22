@@ -14,7 +14,7 @@
 
     <body>
         {% block content_title %}{% endblock %}
-        {% block breadcrumbs %} <a href="/accounts/login/?next=/principal/">Salir</a>{% endblock %}
+        {% block breadcrumbs %} <a href="{% url 'login'%}">Salir</a>{% endblock %}
         <div id="content-main">
             {% block content_below_title %}{% endblock %}
             {% block content_breadcrumb %}{% endblock %}
@@ -26,40 +26,26 @@
 
         <form method="post">
             {% csrf_token %}
-                <div class = "cuadroPrincipal">
+            {{ form.non_field_errors }}
+                <div class = "devengados">
                     <table>
                         <thead>
                             <tr>
                                 <th> </th>
-                                <th>codigo</th>
-                                <th>nro de Factura</th>
-                                <th>Proveedor</th>
-                                <th>OC</th>
-                                <th>ff</th>
-                                <th>Unidad Ejecutora</th>
-                                <th>Objeto</th>
-
                             </tr>
                         </thead>
 
                         <tbody>
-                            {% for elemento in form.selccionar %}
+                            {% for elemento in form.seleccionar %}
                             <tr>
                                 <td>{{ elemento }}</td>
-                                <td>{{ elemento.cuadroPrincipal.emision }}</td>
-                                <td>{{ elemento.cuadroPrincipal.selccionar }}</td>
-                                <td>{{ elemento.cuadroPrincipal.proveedor }}</td>
-                                <td>{{ elemento.oc }}</td>
-                                <td>{{ elemento.ff }}</td>
-                                <td>{{ elemento.unidadEjecutora }}</td>
-                                <td>{{ elemento.objeto }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             
-                <button type="btn btn-primary">Guardar Cambios</button>
+                <input type="submit" class="btn btn-primary" value="Enviar">
             </form>
         {% endblock %}
     </body>

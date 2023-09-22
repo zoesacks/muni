@@ -1,29 +1,10 @@
 
-.cuadroPrincipal {
+.devengados {
+    position: relative;
     width: auto; 
     height: 85vh;
     border: 1px solid #ccc;
     overflow: scroll;
     white-space: nowrap;
 }
-
-.verMas {
-    text-decoration: none; 
-    color: black;
-}
-.verMas::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: transparent;
-    z-index: 1; 
-}
-
-.verMas:hover .verMas::before {
-    cursor: pointer;
-}
-
 

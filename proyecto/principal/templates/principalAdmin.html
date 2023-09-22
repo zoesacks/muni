@@ -1,0 +1,58 @@
+{% extends "admin/base.html" %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    {% block extrahead %}
+    {{ block.super }}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'estilos.css' %}">
+    {% endblock %}
+</head>
+
+<body>
+    {% block content_title %}{% endblock %}
+    {% block breadcrumbs %} <a href="{% url 'login'%}">Salir</a>{% endblock %}
+    <div id="content-main">
+        {% block content_below_title %}{% endblock %}
+        {% block content_breadcrumb %}{% endblock %}
+        {% block content_breadcrumb_trail %}{% endblock %}
+        {% block content_main %}{% endblock %}
+    </div>
+
+    {% block content %}
+    
+    {{hola}}
+
+    <div class="devengados">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nro Factura</th>
+                    <th>Proveedor</th>
+                    <th>Importe</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for dato in datos %}
+                <tr>
+                    <td>{{ dato.nroFactura }}</td>
+                    <td>{{ dato.proveedor }}</td>
+                    <td>{{ dato.importe }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% endblock %}
+</body>
+
+</html>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'estilos.css' %}">
