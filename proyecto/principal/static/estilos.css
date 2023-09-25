@@ -8,3 +8,24 @@
     white-space: nowrap;
 }
 
+.masInfo {
+    position: relative;
+    width: auto; 
+    height: auto;
+    border: 1px solid #ccc;
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+#header {
+    flex-direction: row;
+}
+
+a, a:link, a:visited {
+    text-decoration: none; 
+    color: #000; 
+}
+  
+a:hover {
+    color: #ff0000;
+}

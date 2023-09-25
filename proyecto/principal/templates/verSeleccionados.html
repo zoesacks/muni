@@ -35,6 +35,7 @@
                         <th>Nro Factura</th>
                         <th>Proveedor</th>
                         <th>Importe</th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -43,14 +44,15 @@
                     <tr>
                         <td>{{ elemento.nroFactura }}</td>
                         <td>{{ elemento.proveedor }}</td>
-                        <td>{{ elemento.importe }}</td>
+                        <td>${{ elemento.importe }}</td>
+                        <td><a href="{% url 'masInfo' elemento.id %}">Detalles</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
         
-        <input type="submit" name="volver" value="Volver">
+        <input type="submit" name="volver" value="Descartar">
         <input type="submit" name="submit" value="Enviar">
 
     </form>

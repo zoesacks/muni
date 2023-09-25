@@ -3,53 +3,66 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+
+<head>
 
     {% block extrahead %}
-        {{ block.super }}
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'estilos.css' %}">
+    {{ block.super }}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'estilos.css' %}">
     {% endblock %}
-    </head>
+</head>
 
-    <body>
-        {% block content_title %}{% endblock %}
-        {% block breadcrumbs %} <a href="{% url 'login'%}">Salir</a>{% endblock %}
-        <div id="content-main">
-            {% block content_below_title %}{% endblock %}
-            {% block content_breadcrumb %}{% endblock %}
-            {% block content_breadcrumb_trail %}{% endblock %}
-            {% block content_main %}{% endblock %}
+<body>
+    {% block content_title %}{% endblock %}
+    {% block branding %}
+    <p id="site-name"><a href="{% url 'login'%}">Salir</a></p>
+    {% endblock %}
+    {% block breadcrumbs %}{% endblock %}
+    <div id="content-main">
+        {% block content_below_title %}{% endblock %}
+        {% block content_breadcrumb %}{% endblock %}
+        {% block content_breadcrumb_trail %}{% endblock %}
+        {% block content_main %}{% endblock %}
+    </div>
+
+    {% block content %}
+
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="devengados">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nro Factura</th>
+                        <th>Proveedor</th>
+                        <th>Importe</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for dato in datos %}
+                    <tr>
+                        <td><input type="checkbox" name="seleccion_{{ dato.id }}" /></td>
+                        <td>{{ dato.nroFactura }}</td>
+                        <td>{{ dato.proveedor }}</td>
+                        <td>${{ dato.importe }}</td>
+                        <td><a href="{% url 'masInfo' dato.id %}">Detalles</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-        
-        {% block content %}
 
-        <form method="post">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-                <div class = "devengados">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th> </th>
-                            </tr>
-                        </thead>
+        <input type="submit" class="btn btn-primary" name="form_button" value="Ver seleccionados">
+    </form>
 
-                        <tbody>
-                            {% for elemento in form.seleccionar %}
-                            <tr>
-                                <td>{{ elemento }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            
-                <input type="submit" class="btn btn-primary" value="Enviar">
-            </form>
-        {% endblock %}
-    </body>
+    {% endblock %}
+</body>
+
 </html>
-
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'estilos.css' %}">
