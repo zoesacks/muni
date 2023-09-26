@@ -2,12 +2,17 @@
 .devengados {
     position: relative;
     width: auto; 
-    height: 85vh;
+    height: auto;
+    max-height: 90vmax;
     border: 1px solid #ccc;
     overflow: scroll;
     white-space: nowrap;
 }
 
+.filtrar{
+    margin-bottom: 15px; 
+    display: block;
+}
 .masInfo {
     position: relative;
     width: auto; 
@@ -23,9 +28,9 @@
 
 a, a:link, a:visited {
     text-decoration: none; 
-    color: #000; 
+    color: #333;
 }
   
 a:hover {
-    color: #ff0000;
+    color: #333;
 }

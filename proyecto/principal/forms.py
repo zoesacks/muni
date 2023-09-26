@@ -20,3 +20,7 @@ class seleccionar(forms.Form):
                 label=f'Seleccionar {dato.nroFactura}',  
             )
 
+class filtrarFactura(forms.ModelForm):
+    class Meta:
+        model = devengados
+        fields = ['nroFactura']

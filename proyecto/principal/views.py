@@ -6,6 +6,7 @@ from .forms import *
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+import pdb
 
 
 @login_required
@@ -21,23 +22,60 @@ def tipoDeUsuario(request):
 
 
 def admins(request):
+    facturaIngre = None
+    proveedorIngre = None
     datos = devengados.objects.filter(enviado = True)
-    return render(request, "principalAdmin.html", {'datos': datos})
+
+    if request.method == 'POST':
+        
+        if 'fact_button' in request.POST:
+            factura = request.POST.get('factura', '')  
+            if factura:
+                facturaIngre = factura 
+                datos = datos.filter(nroFactura__iregex = facturaIngre)
+
+        if 'prove_button' in request.POST:
+            proveedor = request.POST.get('proveedor', '')  
+            if proveedor:
+                proveedorIngre = proveedor 
+                datos = datos.filter(proveedor__iregex = proveedorIngre)
+
+        if 'eliminar_button' in request.POST:
+            datos = devengados.objects.filter(enviado = True)
+
+
+    return render(request, "principalAdmin.html", {'datos': datos, 'facturaIngre': facturaIngre, 'proveedorIngre': proveedorIngre})
 
 
 def users(request):
-
     datos = devengados.objects.filter(codigo=request.user, enviado = False)
+    facturaIngre = None
+    proveedorIngre = None
 
     if request.method == 'POST':
-
         form = seleccionar(request.POST, datos = datos)
+        
+        if 'fact_button' in request.POST:
+            factura = request.POST.get('factura', '')  
+            if factura:
+                facturaIngre = factura 
+                datos = datos.filter(nroFactura__iregex = facturaIngre)
 
-        if form.is_valid():
+        if 'prove_button' in request.POST:
+            proveedor = request.POST.get('proveedor', '')  
+            if proveedor:
+                proveedorIngre = proveedor 
+                datos = datos.filter(proveedor__iregex = proveedorIngre)
+
+        if 'eliminar_button' in request.POST:
+            datos = devengados.objects.filter(codigo=request.user, enviado = False)
+        
+        if form.is_valid() and 'form_button' in request.POST:
 
             for dato in datos:
 
                 seleccion_key = f'seleccion_{dato.id}'
+
                 if seleccion_key in form.cleaned_data and form.cleaned_data[seleccion_key]:
                     dato.seleccionar = True
                     dato.save()
@@ -46,8 +84,8 @@ def users(request):
             
     else:
         form = seleccionar(datos = datos)
-
-    return render(request, "principal.html", {'form':form, 'datos':datos})
+    
+    return render(request, "principal.html", {'form':form, 'datos':datos, 'facturaIngre': facturaIngre, 'proveedorIngre': proveedorIngre })
 
 
 def verSeleccionados(request):
