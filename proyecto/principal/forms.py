@@ -6,8 +6,6 @@ from .models import devengados
 from .views import *
 
 
-class enviar(forms.Form):
-   volver = forms.BooleanField(required=False, widget=forms.HiddenInput(), initial=True)
 
 
 class seleccionar(forms.Form):
@@ -18,6 +16,17 @@ class seleccionar(forms.Form):
             self.fields[f'seleccion_{dato.id}'] = forms.BooleanField(
                 required=False,  
                 label=f'Seleccionar {dato.nroFactura}',  
+            )
+
+class deseleccionar(forms.Form):
+    def __init__(self, *args, **kwargs):
+        seleccionados = kwargs.pop('seleccionados', None)
+        super(deseleccionar, self).__init__(*args, **kwargs)
+        for seleccionados in seleccionados:
+            self.fields[f'seleccion_{seleccionados.id}'] = forms.BooleanField(
+                required=False,  
+                label=f'Seleccionar {seleccionados.nroFactura}',
+                initial=False, 
             )
 
 class filtrarFactura(forms.ModelForm):

@@ -1,4 +1,5 @@
 {% extends "admin/base.html" %}
+{% load humanize %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +54,7 @@
                         </tr>
                         <tr>
                             <th>Factura:</th>
-                            <th>{{ deven.importe}}</th>
+                            <th>{{ deven.importe|intcomma }}</th>
                         </tr>
                         <tr>
                             <th>ff:</th>

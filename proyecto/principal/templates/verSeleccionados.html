@@ -1,5 +1,5 @@
 {% extends "admin/base.html" %}
-
+{% load humanize %} 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +16,14 @@
 <body>
     {% block content_title %}{% endblock %}
     {% block branding %}
-    <p id="site-name"><a href="{% url 'login'%}">Salir</a></p>
+
+    <div class="salir">
+        <p id="site-name"><a href="{% url 'login'%}">Salir</a></p>
+    </div>
+    <div class="total">
+        <p>Total: $ {{total|intcomma}}</p>
+    </div>
+
     {% endblock %}
     {% block breadcrumbs %}{% endblock %}
     <div id="content-main">
@@ -37,19 +44,20 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>Eliminar</th>
                             <th>Nro Factura</th>
                             <th>Proveedor</th>
                             <th>Importe</th>
-                            <th></th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {% for elemento in seleccionados %}
                         <tr>
+                            <td><input type="checkbox" name="seleccion_{{ elemento.id }}" /></td>
                             <td><a href="{% url 'masInfo' elemento.id %}">{{ elemento.nroFactura }}</a></td>
                             <td><a href="{% url 'masInfo' elemento.id %}">{{ elemento.proveedor }}</a></td>
-                            <td><a href="{% url 'masInfo' elemento.id %}">${{ elemento.importe }}</a></td>
+                            <td><a href="{% url 'masInfo' elemento.id %}">${{ elemento.importe|intcomma}}</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -59,7 +67,7 @@
 
         <div class="botones">
             <div class="boton">
-                <input type="submit" name="volver" value="Descartar">
+                <input type="submit" name="volver" value="Aplicar y volver">
             </div>
             <div class="boton">
                 <input type="submit" name="submit" value="Enviar">

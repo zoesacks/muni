@@ -5,7 +5,7 @@
     min-width: auto;
     max-width: fit-content; 
     height: auto;
-    max-height: 90vmax;
+    max-height: 70vh;
     border: 1px solid #ccc;
     overflow: scroll;
     white-space: nowrap;
@@ -45,7 +45,9 @@
 
 
 #header {
-    flex-direction: row;
+    flex-direction: column;
+    padding: 15px 30px;
+    justify-content: flex-start;
 }
 
 
@@ -56,4 +58,8 @@ a, a:link, a:visited {
   
 a:hover {
     color: #333;
+}
+
+.total{
+    margin-left: 50vb;
 }

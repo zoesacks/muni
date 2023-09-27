@@ -1,5 +1,5 @@
 {% extends "admin/base.html" %}
-
+{% load humanize %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,14 @@
 <body>
     {% block content_title %}{% endblock %}
     {% block branding %}
-    <p id="site-name"><a href="{% url 'login'%}">Salir</a></p>
+ 
+    <div class="salir">
+        <p id="site-name"><a href="{% url 'login'%}">Salir</a></p>
+    </div>
+    <div class="total">
+        <p>Total: $ {{total|intcomma}}</p>
+    </div>
+    
     {% endblock %}
     {% block breadcrumbs %}{% endblock %}
 
@@ -71,7 +78,7 @@
                             <td><input type="checkbox" name="seleccion_{{ dato.id }}" /></td>
                             <td><a href="{% url 'masInfo' dato.id %}">{{ dato.nroFactura }}</a></td>
                             <td><a href="{% url 'masInfo' dato.id %}">{{ dato.proveedor }}</a></td>
-                            <td><a href="{% url 'masInfo' dato.id %}">${{ dato.importe }}</a></td>
+                            <td><a href="{% url 'masInfo' dato.id %}">${{ dato.importe|intcomma }}</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -81,7 +88,7 @@
         </div>
 
         <div class="botonEnviar">
-            <input type="submit" class="btn btn-primary" name="form_button" value="Enviar">
+            <input type="submit" class="btn btn-primary" name="form_button" value="Ver seleccionados">
         </div>
 
     </form>

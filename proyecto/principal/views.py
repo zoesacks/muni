@@ -4,9 +4,8 @@ from django.views import View
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.urls import reverse
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-import pdb
+
 
 
 @login_required
@@ -48,9 +47,14 @@ def admins(request):
 
 
 def users(request):
-    datos = devengados.objects.filter(codigo=request.user, enviado = False)
+    datos = devengados.objects.filter(codigo=request.user, enviado = False, seleccionar = False)
+    todos = devengados.objects.filter(codigo=request.user, enviado = False, seleccionar = True)
     facturaIngre = None
     proveedorIngre = None
+    total = 0
+
+    for dato in todos:
+        total += dato.importe
 
     if request.method == 'POST':
         form = seleccionar(request.POST, datos = datos)
@@ -77,46 +81,50 @@ def users(request):
                     datos = datos.filter(proveedor__iregex = proveedorIngre)
 
             if 'eliminar_button' in request.POST:
-                datos = devengados.objects.filter(codigo=request.user, enviado = False)
+                datos = devengados.objects.filter(codigo=request.user, enviado = False, seleccionar = False)
             
             if 'form_button' in request.POST:
                 return redirect(reverse('verSeleccionados'))
-        
 
-
-            
-            
     else:
         form = seleccionar(datos = datos)
     
-    return render(request, "principal.html", {'form':form, 'datos':datos, 'facturaIngre': facturaIngre, 'proveedorIngre': proveedorIngre })
+    return render(request, "principal.html", {'form':form, 'datos':datos, 'facturaIngre': facturaIngre, 'proveedorIngre': proveedorIngre, 'total': total })
 
 
 def verSeleccionados(request):
 
     user = request.user
     seleccionados = devengados.objects.filter(codigo=user, seleccionar=True, enviado = False )
-    todos = devengados.objects.all()
+
+    total = 0
+
+    for sele in seleccionados:
+        total += sele.importe
 
     if request.method == 'POST':
-        form = enviar(request.POST)
+        form = seleccionar(request.POST, datos = seleccionados)
 
-        if 'submit' in request.POST and form.is_valid():
-            for dato in seleccionados:
-                dato.enviado = True
-                dato.save()
+        if form.is_valid():
 
-        if 'volver' in request.POST and form.is_valid():
-            for dato in todos:
-                dato.seleccionar = False
-                dato.save()
-        
-        return redirect(reverse('users'))
-    
-    else: 
-        form = enviar()
+            for seleccionado in seleccionados:
+                seleccion_key = f'seleccion_{seleccionado.id}'
 
-    return render(request, 'verSeleccionados.html', {'seleccionados': seleccionados, 'form': form})
+                if seleccion_key in form.cleaned_data and form.cleaned_data[seleccion_key]:
+                    seleccionado.seleccionar = False
+                    seleccionado.save()
+
+            if 'submit' in request.POST:
+                seleccionados = seleccionados.filter(seleccionar = True)
+                for dato in seleccionados:
+                    dato.enviado = True
+                    dato.save()
+
+                
+            return redirect(reverse('users'))
+
+
+    return render(request, 'verSeleccionados.html', {'seleccionados': seleccionados, 'total': total})
 
 def masInfo(request, id):
     deven = get_object_or_404(devengados, pk=id)

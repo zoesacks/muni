@@ -1,5 +1,5 @@
 {% extends "admin/base.html" %}
-
+{% load humanize %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +66,7 @@
                     <tr>
                         <td><a href="{% url 'masInfo' dato.id %}">{{ dato.nroFactura }}</a></td>
                         <td><a href="{% url 'masInfo' dato.id %}">{{ dato.proveedor }}</a></td>
-                        <td><a href="{% url 'masInfo' dato.id %}">${{ dato.importe }}</a></td>
+                        <td><a href="{% url 'masInfo' dato.id %}">${{ dato.importe|intcomma }}</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

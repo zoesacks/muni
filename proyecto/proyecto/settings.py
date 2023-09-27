@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'principal',
     'import_export',
+    'django.contrib.humanize'
 
 ]
 
