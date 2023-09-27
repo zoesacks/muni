@@ -1,7 +1,9 @@
 
 .devengados {
+
     position: relative;
-    width: auto; 
+    min-width: auto;
+    max-width: fit-content; 
     height: auto;
     max-height: 90vmax;
     border: 1px solid #ccc;
@@ -9,22 +11,43 @@
     white-space: nowrap;
 }
 
-.filtrar{
-    margin-bottom: 15px; 
-    display: block;
+.botones{
+    text-align: center;
+}
+
+.boton{
+    display: inline-block; /* Esto hace que los elementos se muestren en línea y uno al lado del otro */
+    margin-right: 5px;
 }
 .masInfo {
     position: relative;
-    width: auto; 
+    min-width: auto;
+    max-width: fit-content; 
     height: auto;
     border: 1px solid #ccc;
     overflow: scroll;
     white-space: nowrap;
 }
 
+.botonEnviar{
+    margin: 10px;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;
+}
+
+.cuadro{
+    margin: 10px;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;
+}
+
+
 #header {
     flex-direction: row;
 }
+
 
 a, a:link, a:visited {
     text-decoration: none; 

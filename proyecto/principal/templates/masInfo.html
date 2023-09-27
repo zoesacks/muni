@@ -26,57 +26,60 @@
 
     {% block content %}
 
-        <div class="masInfo">
-            <table>
+        <div class="cuadro">
+            <div class="masInfo">
+                <table>
 
-                <tbody>
-                    <tr>
-                        <th>Nro de factura:</th>
-                        <th>{{ deven.nroFactura }}</th>
-                    </tr>
-                    <tr>
-                        <th>Emision:</th>
-                        <th>{{ deven.emision }}</th>
-                    </tr>
-                    <tr>
-                        <th>Alta:</th>
-                        <th>{{ deven.alta }}</th>
-                    </tr>
-                    <tr>
-                        <th>Proveedor:</th>
-                        <th>{{ deven.proveedor }}</th>
-                    </tr>
-                    <tr>
-                        <th>OC:</th>
-                        <th>{{ deven.oc}}</th>
-                    </tr>
-                    <tr>
-                        <th>Factura:</th>
-                        <th>{{ deven.importe}}</th>
-                    </tr>
-                    <tr>
-                        <th>ff:</th>
-                        <th>{{ deven.ff}}</th>
-                    </tr>
-                    <tr>
-                        <th>Unidad ejecutora:</th>
-                        <th>{{ deven.unidadEjecutora}}</th>
-                    </tr>
-                    <tr>
-                        <th>Objeto:</th>
-                        <th>{{ deven.objeto}}</th>
-                    </tr>
-                    <tr>
-                        <th>Fondo afectado:</th>
-                        <th>{{ deven.fondoAfectado}}</th>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <th>Nro de factura:</th>
+                            <th>{{ deven.nroFactura }}</th>
+                        </tr>
+                        <tr>
+                            <th>Emision:</th>
+                            <th>{{ deven.emision }}</th>
+                        </tr>
+                        <tr>
+                            <th>Alta:</th>
+                            <th>{{ deven.alta }}</th>
+                        </tr>
+                        <tr>
+                            <th>Proveedor:</th>
+                            <th>{{ deven.proveedor }}</th>
+                        </tr>
+                        <tr>
+                            <th>OC:</th>
+                            <th>{{ deven.oc}}</th>
+                        </tr>
+                        <tr>
+                            <th>Factura:</th>
+                            <th>{{ deven.importe}}</th>
+                        </tr>
+                        <tr>
+                            <th>ff:</th>
+                            <th>{{ deven.ff}}</th>
+                        </tr>
+                        <tr>
+                            <th>Unidad ejecutora:</th>
+                            <th>{{ deven.unidadEjecutora}}</th>
+                        </tr>
+                        <tr>
+                            <th>Objeto:</th>
+                            <th>{{ deven.objeto}}</th>
+                        </tr>
+                        <tr>
+                            <th>Fondo afectado:</th>
+                            <th>{{ deven.fondoAfectado}}</th>
+                        </tr>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <input type="button" value="Volver" onclick="window.history.back();">
-
+        <div class="botonEnviar">
+            <input type="button" value="Volver" onclick="window.history.back();">
+        </div>
 
     {% endblock %}
 </body>

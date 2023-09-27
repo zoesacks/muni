@@ -54,33 +54,37 @@ def users(request):
 
     if request.method == 'POST':
         form = seleccionar(request.POST, datos = datos)
-        
-        if 'fact_button' in request.POST:
-            factura = request.POST.get('factura', '')  
-            if factura:
-                facturaIngre = factura 
-                datos = datos.filter(nroFactura__iregex = facturaIngre)
 
-        if 'prove_button' in request.POST:
-            proveedor = request.POST.get('proveedor', '')  
-            if proveedor:
-                proveedorIngre = proveedor 
-                datos = datos.filter(proveedor__iregex = proveedorIngre)
-
-        if 'eliminar_button' in request.POST:
-            datos = devengados.objects.filter(codigo=request.user, enviado = False)
-        
-        if form.is_valid() and 'form_button' in request.POST:
+        if form.is_valid():
 
             for dato in datos:
-
                 seleccion_key = f'seleccion_{dato.id}'
 
                 if seleccion_key in form.cleaned_data and form.cleaned_data[seleccion_key]:
                     dato.seleccionar = True
                     dato.save()
+        
+            if 'fact_button' in request.POST:
+                factura = request.POST.get('factura', '')  
+                if factura:
+                    facturaIngre = factura 
+                    datos = datos.filter(nroFactura__iregex = facturaIngre)
 
-            return redirect(reverse('verSeleccionados'))
+            if 'prove_button' in request.POST:
+                proveedor = request.POST.get('proveedor', '')  
+                if proveedor:
+                    proveedorIngre = proveedor 
+                    datos = datos.filter(proveedor__iregex = proveedorIngre)
+
+            if 'eliminar_button' in request.POST:
+                datos = devengados.objects.filter(codigo=request.user, enviado = False)
+            
+            if 'form_button' in request.POST:
+                return redirect(reverse('verSeleccionados'))
+        
+
+
+            
             
     else:
         form = seleccionar(datos = datos)

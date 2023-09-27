@@ -30,42 +30,48 @@
     
     <form method="post">
         {% csrf_token %}
-        <input type="text" name="factura">
-        <input type="submit" class="btn btn-primary" name="fact_button" value="Buscar factura">
+        <div class="botones">
+
+            <div class="boton">
+                <input type="text" name="factura" placeholder="Factura">
+                <input type="submit" class="btn btn-primary" name="fact_button" value="Buscar factura">
+            </div>
+    
+            <div class="boton">
+                <input type="text" name="proveedor" placeholder="Proveedor">
+                <input type="submit" class="btn btn-primary" name="prove_button" value="Buscar proveedor">
+            </div>
+    
+            <div class="boton">
+                <input type="submit" class="btn btn-primary" name="eliminar_button" value="Eliminar filtros">
+            </div>
+    
+        </div>
     </form>
 
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="proveedor">
-        <input type="submit" class="btn btn-primary" name="prove_button" value="Buscar proveedor">
-    </form>
+    <div class="cuadro">
+        <div class="devengados">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nro Factura</th>
+                        <th>Proveedor</th>
+                        <th>Importe</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-    <form method="post">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-primary" name="eliminar_button" value="Eliminar filtros">
-    </form>
-
-    <div class="devengados">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nro Factura</th>
-                    <th>Proveedor</th>
-                    <th>Importe</th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for dato in datos %}
-                <tr>
-                    <td><a href="{% url 'masInfo' dato.id %}">{{ dato.nroFactura }}</a></td>
-                    <td><a href="{% url 'masInfo' dato.id %}">{{ dato.proveedor }}</a></td>
-                    <td><a href="{% url 'masInfo' dato.id %}">${{ dato.importe }}</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <tbody>
+                    {% for dato in datos %}
+                    <tr>
+                        <td><a href="{% url 'masInfo' dato.id %}">{{ dato.nroFactura }}</a></td>
+                        <td><a href="{% url 'masInfo' dato.id %}">{{ dato.proveedor }}</a></td>
+                        <td><a href="{% url 'masInfo' dato.id %}">${{ dato.importe }}</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
     {% endblock %}
