@@ -31,15 +31,13 @@
     <form method="post">
         {% csrf_token %}
         <div class="botones">
+            <div class="boton">
+                <input type="text" name="codigo" placeholder="Codigo">
 
-            <div class="boton">
                 <input type="text" name="factura" placeholder="Factura">
-                <input type="submit" class="btn btn-primary" name="fact_button" value="Buscar factura">
-            </div>
-    
-            <div class="boton">
+
                 <input type="text" name="proveedor" placeholder="Proveedor">
-                <input type="submit" class="btn btn-primary" name="prove_button" value="Buscar proveedor">
+                <input type="submit" class="btn btn-primary" name="buscar_button" value="Buscar ">
             </div>
     
             <div class="boton">
@@ -54,6 +52,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Codigo</th>
                         <th>Nro Factura</th>
                         <th>Proveedor</th>
                         <th>Importe</th>
@@ -64,6 +63,7 @@
                 <tbody>
                     {% for dato in datos %}
                     <tr>
+                        <td><a href="{% url 'masInfo' dato.id %}">{{ dato.codigo }}</a></td>
                         <td><a href="{% url 'masInfo' dato.id %}">{{ dato.nroFactura }}</a></td>
                         <td><a href="{% url 'masInfo' dato.id %}">{{ dato.proveedor }}</a></td>
                         <td><a href="{% url 'masInfo' dato.id %}">${{ dato.importe|intcomma }}</a></td>

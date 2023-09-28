@@ -7,8 +7,8 @@
     height: auto;
     max-height: 70vh;
     border: 1px solid #ccc;
-    overflow: scroll;
-    white-space: nowrap;
+    overflow-y: scroll;
+
 }
 
 .botones{
@@ -24,9 +24,7 @@
     min-width: auto;
     max-width: fit-content; 
     height: auto;
-    border: 1px solid #ccc;
-    overflow: scroll;
-    white-space: nowrap;
+
 }
 
 .botonEnviar{
@@ -62,4 +60,10 @@ a:hover {
 
 .total{
     margin-left: 50vb;
+}
+
+
+#botonEliminar{
+    background-color: #bb3636;
+    padding: 5px 10px;
 }

@@ -5,12 +5,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
 
 
 
 @login_required
 def tipoDeUsuario(request):
-
     user = request.user
 
     if user.username == "administracion":
@@ -26,14 +26,17 @@ def admins(request):
     datos = devengados.objects.filter(enviado = True)
 
     if request.method == 'POST':
-        
-        if 'fact_button' in request.POST:
+
+        if 'buscar_button' in request.POST:
+
+            codigo = request.POST.get('codigo', '')  
+            if codigo:
+                datos = datos.filter(codigo__iregex = codigo)
+
             factura = request.POST.get('factura', '')  
             if factura:
-                facturaIngre = factura 
-                datos = datos.filter(nroFactura__iregex = facturaIngre)
-
-        if 'prove_button' in request.POST:
+                datos = datos.filter(nroFactura__iregex = factura)
+    
             proveedor = request.POST.get('proveedor', '')  
             if proveedor:
                 proveedorIngre = proveedor 
@@ -49,8 +52,8 @@ def admins(request):
 def users(request):
     datos = devengados.objects.filter(codigo=request.user, enviado = False, seleccionar = False)
     todos = devengados.objects.filter(codigo=request.user, enviado = False, seleccionar = True)
-    facturaIngre = None
-    proveedorIngre = None
+    factura = None
+    proveedor = None
     total = 0
 
     for dato in todos:
@@ -68,13 +71,12 @@ def users(request):
                     dato.seleccionar = True
                     dato.save()
         
-            if 'fact_button' in request.POST:
+            if 'buscar_button' in request.POST:
+
                 factura = request.POST.get('factura', '')  
                 if factura:
-                    facturaIngre = factura 
-                    datos = datos.filter(nroFactura__iregex = facturaIngre)
-
-            if 'prove_button' in request.POST:
+                    datos = datos.filter(nroFactura__iregex = factura)
+        
                 proveedor = request.POST.get('proveedor', '')  
                 if proveedor:
                     proveedorIngre = proveedor 
@@ -89,14 +91,12 @@ def users(request):
     else:
         form = seleccionar(datos = datos)
     
-    return render(request, "principal.html", {'form':form, 'datos':datos, 'facturaIngre': facturaIngre, 'proveedorIngre': proveedorIngre, 'total': total })
+    return render(request, "principal.html", {'form':form, 'datos':datos, 'factura': factura, 'proveedor': proveedor, 'total': total })
 
 
 def verSeleccionados(request):
-
     user = request.user
     seleccionados = devengados.objects.filter(codigo=user, seleccionar=True, enviado = False )
-
     total = 0
 
     for sele in seleccionados:
@@ -108,23 +108,24 @@ def verSeleccionados(request):
         if form.is_valid():
 
             for seleccionado in seleccionados:
-                seleccion_key = f'seleccion_{seleccionado.id}'
 
-                if seleccion_key in form.cleaned_data and form.cleaned_data[seleccion_key]:
+                borrarSeleccionado = f'borrar_{seleccionado.id}'
+
+                if borrarSeleccionado in request.POST :
                     seleccionado.seleccionar = False
                     seleccionado.save()
+                    return redirect(reverse('verSeleccionados'))
 
             if 'submit' in request.POST:
                 seleccionados = seleccionados.filter(seleccionar = True)
                 for dato in seleccionados:
                     dato.enviado = True
                     dato.save()
-
                 
             return redirect(reverse('users'))
 
-
     return render(request, 'verSeleccionados.html', {'seleccionados': seleccionados, 'total': total})
+
 
 def masInfo(request, id):
     deven = get_object_or_404(devengados, pk=id)
