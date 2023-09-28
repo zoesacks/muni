@@ -1,0 +1,69 @@
+
+.devengados {
+
+    position: relative;
+    min-width: auto;
+    max-width: fit-content; 
+    height: auto;
+    max-height: 70vh;
+    border: 1px solid #ccc;
+    overflow-y: scroll;
+
+}
+
+.botones{
+    text-align: center;
+}
+
+.boton{
+    display: inline-block; /* Esto hace que los elementos se muestren en línea y uno al lado del otro */
+    margin-right: 5px;
+}
+.masInfo {
+    position: relative;
+    min-width: auto;
+    max-width: fit-content; 
+    height: auto;
+
+}
+
+.botonEnviar{
+    margin: 10px;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;
+}
+
+.cuadro{
+    margin: 10px;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;
+}
+
+
+#header {
+    flex-direction: column;
+    padding: 15px 30px;
+    justify-content: flex-start;
+}
+
+
+a, a:link, a:visited {
+    text-decoration: none; 
+    color: #333;
+}
+  
+a:hover {
+    color: #333;
+}
+
+.total{
+    margin-left: 50vb;
+}
+
+
+#botonEliminar{
+    background-color: #bb3636;
+    padding: 5px 10px;
+}

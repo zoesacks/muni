@@ -17,10 +17,10 @@
     {% block branding %}
  
     <div class="salir">
-        <p id="site-name"><a href="{% url 'login'%}">Salir</a></p>
+        <h2 id="site-name"><a href="{% url 'login'%}">Salir</a></h2>
     </div>
     <div class="total">
-        <p>Total: $ {{total|intcomma}}</p>
+        <h2>Total: $ {{total|intcomma}}</h2>
     </div>
 
     {% endblock %}

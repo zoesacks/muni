@@ -1,8 +1,4 @@
-from collections.abc import Mapping
-from typing import Any
 from django import forms
-from django.forms.utils import ErrorList
-from .models import devengados
 from .views import *
 
 
@@ -15,3 +11,4 @@ class seleccionar(forms.Form):
                 required=False,  
                 label=f'Seleccionar {factura.nroFactura}',  
             )
+

@@ -27,14 +27,15 @@
     </div>
 
     {% block content %}
-    
     <form method="post">
         {% csrf_token %}
+        
+
         <div class="botones">
             <div class="boton">
                 <input type="text" name="codigo" placeholder="Codigo">
 
-                <input type="text" name="nroFactura" placeholder="Factura">
+                <input type="text" name="factura" placeholder="Factura">
 
                 <input type="text" name="proveedor" placeholder="Proveedor">
 
@@ -50,12 +51,15 @@
 
     <div class="cuadro">
         <div class="devengados">
+
             <table>
+
                 <thead>
                     <tr>
                         <th>Codigo</th>
                         <th>Nro Factura</th>
                         <th>Proveedor</th>
+                        <th>FF</th>
                         <th>Importe</th>
                         <th></th>
                     </tr>
@@ -67,10 +71,12 @@
                         <td><a href="{% url 'masInfo' factura.id %}">{{ factura.codigo }}</a></td>
                         <td><a href="{% url 'masInfo' factura.id %}">{{ factura.nroFactura }}</a></td>
                         <td><a href="{% url 'masInfo' factura.id %}">{{ factura.proveedor }}</a></td>
+                        <td><a href="{% url 'masInfo' factura.id %}">{{ factura.ff }}</a></td>
                         <td><a href="{% url 'masInfo' factura.id %}">${{ factura.importe|intcomma }}</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
+
             </table>
         </div>
     </div>

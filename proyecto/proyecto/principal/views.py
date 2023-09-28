@@ -2,16 +2,16 @@ from django.shortcuts import render, redirect
 from .models import *
 from django.views import View
 from django.contrib.auth.decorators import login_required
-from .forms import *
+from .forms import seleccionar
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
 
 
 
 @login_required
 def tipoDeUsuario(request):
     user = request.user
-
     if user.username == "administracion":
         return redirect(reverse('admins'))
     
@@ -25,32 +25,30 @@ def admins(request):
     if request.method == 'POST':
 
         if 'buscar_button' in request.POST:
-
             codigo = request.POST.get('codigo', '')  
             if codigo:
                 facturas = facturas.filter(codigo__iregex = codigo)
 
-            nroFactura = request.POST.get('factura', '')  
+            nroFactura = request.POST.get('nroFactura', '')  
             if nroFactura:
                 facturas = facturas.filter(nroFactura__iregex = nroFactura)
     
             proveedor = request.POST.get('proveedor', '')  
-            if proveedor: 
+            if proveedor:
                 facturas = facturas.filter(proveedor__iregex = proveedor)
 
         if 'eliminar_button' in request.POST:
             facturas = devengados.objects.filter(enviado = True)
 
-
-    return render(request, "principalAdmin.html", {'facturas': facturas,})
+    return render(request, "principalAdmin.html", {'facturas': facturas, })
 
 
 def users(request):
     facturas = devengados.objects.filter(codigo=request.user, enviado = False, seleccionar = False)
-    seleccionados = devengados.objects.filter(codigo=request.user, enviado = False, seleccionar = True)
+    todos = devengados.objects.filter(codigo=request.user, enviado = False, seleccionar = True)
     total = 0
 
-    for factura in seleccionados:
+    for factura in todos:
         total += factura.importe
 
     if request.method == 'POST':
@@ -67,16 +65,17 @@ def users(request):
         
             if 'buscar_button' in request.POST:
 
-                nroFactura = request.POST.get('factura', '')  
-                if nroFactura:
-                    facturas = facturas.filter(nroFactura__iregex = nroFactura)
+                factura = request.POST.get('factura', '')  
+                if factura:
+                    facturas = facturas.filter(nroFactura__iregex = factura)
         
                 proveedor = request.POST.get('proveedor', '')  
                 if proveedor:
-                    facturas = facturas.filter(proveedor__iregex = proveedor)
+                    proveedorIngre = proveedor 
+                    facturas.filter(proveedor__iregex = proveedorIngre)
 
             if 'eliminar_button' in request.POST:
-                facturas = devengados.objects.filter(codigo=request.user)
+                facturas = devengados.objects.filter(codigo=request.user, enviado = False, seleccionar = False)
             
             if 'form_button' in request.POST:
                 return redirect(reverse('verSeleccionados'))
@@ -96,21 +95,26 @@ def verSeleccionados(request):
         total += sele.importe
 
     if request.method == 'POST':
+        form = seleccionar(request.POST, facturas = seleccionados)
 
-        for seleccionado in seleccionados:
+        if form.is_valid():
 
-            if f'borrar_{seleccionado.id}' in request.POST :
-                seleccionado.seleccionar = False
-                seleccionado.save()
-                return redirect(reverse('verSeleccionados'))
+            for seleccionado in seleccionados:
 
-        if 'submit' in request.POST:
-            seleccionados = seleccionados.filter(seleccionar = True)
-            for dato in seleccionados:
-                dato.enviado = True
-                dato.save()
+                borrarSeleccionado = f'borrar_{seleccionado.id}'
+
+                if borrarSeleccionado in request.POST :
+                    seleccionado.seleccionar = False
+                    seleccionado.save()
+                    return redirect(reverse('verSeleccionados'))
+
+            if 'submit' in request.POST:
+                seleccionados = seleccionados.filter(seleccionar = True)
+                for factura in seleccionados:
+                    factura.enviado = True
+                    factura.save()
                 
-        return redirect(reverse('users'))
+            return redirect(reverse('users'))
 
     return render(request, 'verSeleccionados.html', {'seleccionados': seleccionados, 'total': total})
 

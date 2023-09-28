@@ -1,10 +1,11 @@
 {% extends "admin/base.html" %}
-{% load humanize %}
+{% load humanize %} 
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     {% block extrahead %}
     {{ block.super }}
     {% load static %}
@@ -15,7 +16,7 @@
 <body>
     {% block content_title %}{% endblock %}
     {% block branding %}
- 
+
     <div class="salir">
         <p id="site-name"><a href="{% url 'login'%}">Salir</a></p>
     </div>
@@ -25,7 +26,6 @@
 
     {% endblock %}
     {% block breadcrumbs %}{% endblock %}
-
     <div id="content-main">
         {% block content_below_title %}{% endblock %}
         {% block content_breadcrumb %}{% endblock %}
@@ -37,64 +37,48 @@
 
     <form method="post">
         {% csrf_token %}
-        {{ form.non_field_errors }}
-
-        <div class="botones">
-
-            <div class="boton">
-
-                <input type="text" name="nroFactura" placeholder="Factura">
-
-                <input type="text" name="proveedor" placeholder="Proveedor">
-
-                <input type="submit" class="btn btn-primary" name="buscar_button" value="Buscar ">
-            </div>
-    
-            <div class="boton">
-                <input type="submit" class="btn btn-primary" name="eliminar_button" value="Ver todos">
-            </div>
-
-        </div>
 
         <div class="cuadro">
+
             <div class="devengados">
-
                 <table>
-
                     <thead>
                         <tr>
                             <th></th>
                             <th>Nro Factura</th>
                             <th>Proveedor</th>
-                            <th>FF</th>
                             <th>Importe</th>
-                            <th></th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        {% for factura in facturas %}
+                        {% for elemento in seleccionados %}
                         <tr>
-                            <td><input type="checkbox" name="seleccion_{{ factura.id }}" /></td>
-                            <td><a href="{% url 'masInfo' factura.id %}">{{ factura.nroFactura }}</a></td>
-                            <td><a href="{% url 'masInfo' factura.id %}">{{ factura.proveedor }}</a></td>
-                            <td><a href="{% url 'masInfo' factura.id %}">{{ factura.ff }}</a></td>
-                            <td><a href="{% url 'masInfo' factura.id %}">${{ factura.importe|intcomma }}</a></td>
+                            <td><input type="submit" name="borrar_{{ elemento.id }}"  value="🗑️" id="botonEliminar"/></td>
+                            <td><a href="{% url 'masInfo' elemento.id %}">{{ elemento.nroFactura }}</a></td>
+                            <td><a href="{% url 'masInfo' elemento.id %}">{{ elemento.proveedor }}</a></td>
+                            <td><a href="{% url 'masInfo' elemento.id %}">${{ elemento.importe|intcomma}}</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
-
                 </table>
             </div>
         </div>
 
-        <div class="botonEnviar">
-            <input type="submit" class="btn btn-primary" name="form_button" value="Ver seleccionados">
+        <div class="botones">
+            <div class="boton">
+                <input type="submit" name="volver" value="Volver">
+            </div>
+            <div class="boton">
+                <input type="submit" name="submit" value="Enviar">
+            </div>
         </div>
 
     </form>
-
     {% endblock %}
 </body>
 
 </html>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'estilos.css' %}">

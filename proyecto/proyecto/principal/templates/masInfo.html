@@ -1,0 +1,88 @@
+{% extends "admin/base.html" %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block extrahead %}
+    {{ block.super }}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'estilos.css' %}">
+    {% endblock %}
+</head>
+
+<body>
+    {% block content_title %}{% endblock %}
+    {% block branding %}
+    <p id="site-name"><a href="{% url 'login'%}">Salir</a></p>
+    {% endblock %}
+    {% block breadcrumbs %}{% endblock %}
+    <div id="content-main">
+        {% block content_below_title %}{% endblock %}
+        {% block content_breadcrumb %}{% endblock %}
+        {% block content_breadcrumb_trail %}{% endblock %}
+        {% block content_main %}{% endblock %}
+    </div>
+
+    {% block content %}
+
+        <div class="cuadro">
+            <div class="masInfo">
+                <table>
+
+                    <tbody>
+                        <tr>
+                            <th>Nro de factura:</th>
+                            <th>{{ deven.nroFactura }}</th>
+                        </tr>
+                        <tr>
+                            <th>Emision:</th>
+                            <th>{{ deven.emision }}</th>
+                        </tr>
+                        <tr>
+                            <th>Alta:</th>
+                            <th>{{ deven.alta }}</th>
+                        </tr>
+                        <tr>
+                            <th>Proveedor:</th>
+                            <th>{{ deven.proveedor }}</th>
+                        </tr>
+                        <tr>
+                            <th>OC:</th>
+                            <th>{{ deven.oc}}</th>
+                        </tr>
+                        <tr>
+                            <th>Factura:</th>
+                            <th>{{ deven.importe|intcomma }}</th>
+                        </tr>
+                        <tr>
+                            <th>ff:</th>
+                            <th>{{ deven.ff}}</th>
+                        </tr>
+                        <tr>
+                            <th>Unidad ejecutora:</th>
+                            <th>{{ deven.unidadEjecutora}}</th>
+                        </tr>
+                        <tr>
+                            <th>Objeto:</th>
+                            <th>{{ deven.objeto}}</th>
+                        </tr>
+                        <tr>
+                            <th>Fondo afectado:</th>
+                            <th>{{ deven.fondoAfectado}}</th>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="botonEnviar">
+            <input type="button" value="Volver" onclick="window.history.back();">
+        </div>
+
+    {% endblock %}
+</body>
+
+</html>
